@@ -1,0 +1,4 @@
+Flask==2.1.0
+flask-mongoengine==1.0.0
+numpy==1.20.3
+Faker==12.1.0
