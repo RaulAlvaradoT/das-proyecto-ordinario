@@ -1,9 +1,29 @@
-# Proyecto Ordinario - Microservices Architecture
-Clases utilizadas en nuestro proyecto:
+# Proyecto Final - Diseño y Arquitectura de Software
 
------- MODULO: user_transaction ------
-* `Transaction`: El objetivo de esta clase es poder crear instancias que simulen una transacción.
-   * ------ **ATRIBUTOS** ------
+## Integrantes:
+- Francisco Alan Menchaca Merino - [@alanmenchaca](https://github.com/alanmenchaca)
+- Adrian Led Vazquez Herrera - [@LedVazquez](https://github.com/LedVazquez)
+- Jesús Raúl Alvarado Torres - [@RaulAlvaradoT](https://github.com/RaulAlvaradoT)
+
+## Utilizamos:
+- [Docker](https://www.docker.com)
+- [Python](https://www.python.org)
+- [Mongodb](https://www.mongodb.com)
+- [Mongo-express](https://hub.docker.com/_/mongo-express)
+
+
+## Documentación:
+- [Docker](https://docs.docker.com)
+- [Python](https://docs.python.org/3)
+- [Mongodb](https://www.mongodb.com/docs)
+- [Flask](https://flask.palletsprojects.com/en/2.1.x)
+- [Markdown](https://www.markdownguide.org/basic-syntax)
+
+## Clases utilizadas en nuestro proyecto:
+
+### MODULO: user_transaction 
+   * `Transaction`: El objetivo de esta clase es poder crear instancias que simulen una transacción.
+#### ------ **ATRIBUTOS** ------
    * `referencia`: Número de 6 dígitos que se incrementa de manera automática al crear una instancia de la clase Transaction.
    * `date`: Fecha de cuando se realizó la transacción (se genera de manera automática utilizando la librería Faker).
    * `amount`: Monto de la transacción (puede ser positivo o negativo).
@@ -11,28 +31,26 @@ Clases utilizadas en nuestro proyecto:
    * `category`: La categoría de la transacción (salary, savings, groceries, transfer, rent, other).
    * `user`: El nombre de la persona de la transacción.
    * `user_email`: El e-mail de la persona de la transacción.
-      * ------ **FUNCIONES** ------
-      * `set_user_data`: Se utiliza para asignar el nombre y el e-mail de la persona de la transacción, los cuales se obtienen por parámetros.
-      * `_get_object_to_dict`: Retorna el objeto creado en forma de diccionario.
-   
-* `TransactionGenerator`: El objetivo de esta clase es poder crear una lista de Transaciones generadas de manera aleatoria.
-   * ------ **FUNCIONES** ------
+#### ------ **FUNCIONES** ------
+   * `set_user_data`: Se utiliza para asignar el nombre y el e-mail de la persona de la transacción, los cuales se obtienen por parámetros.
+   * `_get_object_to_dict`: Retorna el objeto creado en forma de diccionario.
+   * `TransactionGenerator`: El objetivo de esta clase es poder crear una lista de Transaciones generadas de manera aleatoria.
    * `generate_rnd_transactions`: Esta función crea transacciones generadas de manera aleatoria, esto de acuerdo al número de usuarios ingresado por parámetros, e.g. por cada usuario se genera una transacción de categoría: salary, savings, groceries, transfer, rent y other, de modo que por cada usuario se generan 6 transacciones (si el número de usuarios es igual a 2, se generan 12 transacciones).
    
------- MODULO: mongo_db ------
+### MODULO: Mongo_db 
 * `UserTransactionDB`: Esta clase se utiliza para crear una base de datos en Mongodb.
-   * ------ **ATRIBUTOS** ------
+#### ------ **ATRIBUTOS** ------
    * `client`: Cliente necesario para crear una base de datos en MongoDB o para crear colecciones de documentos en MongoDB.
    * `users_db`: Atributo que contiene la base de datos de MongoDB
    * `transactions`: Atributo que contiene una colección de la base de datos de MongoDB
-      * ------ **FUNCIONES** ------
-      * `_generate_mongo_client`: Genera una instancia de tipo MongoClient.
+#### ------ **FUNCIONES** ------
+   * `_generate_mongo_client`: Genera una instancia de tipo MongoClient.
          *  Host: mongo_db
          *  port: 27017
          *  username: root
          *  password: kberl
-      * `create_mongo_db`: Crea una base de datos en MongoDB, llamada "users_db" y una colección llamada: "transactions", por defecto.
-      * `get_db_collection`: Retorna la colección ya creada (la colección "transactions" en este caso).
+   * `create_mongo_db`: Crea una base de datos en MongoDB, llamada "users_db" y una colección llamada: "transactions", por defecto.
+   * `get_db_collection`: Retorna la colección ya creada (la colección "transactions" en este caso).
 
 Con las clases anteriormente descritas e implementadas en código es posible tomar en cuenta los siguientes puntos:
 * La `referencia` de una transacción es única
@@ -43,7 +61,7 @@ Con las clases anteriormente descritas e implementadas en código es posible tom
 
 Con ayuda de un documento de tipo `docker-compose.yml` podemos crear imagenes e inicializar containers de: mongo_db, mongo-express y flask, con el contenedor de mongo_db podemos crear la base de datos de las de las transacciones de los usuarios y una ves habiendo generado las transacciones de manera aleatoria, podemos crear una colección que contenga todas las transacciones. 
 
-
+## Screenshots:
 
 Utilizando mongo-express en el host:localhost, puerto:8081, es posible visualizar la base de datos posteriormente creada y llenada:
 
