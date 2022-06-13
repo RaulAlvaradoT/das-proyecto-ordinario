@@ -1,4 +1,5 @@
 # Proyecto Ordinario - Microservices Architecture
+Clases utilizadas en nuestro proyecto:
 
 ------ MODULO: user_transaction ------
 * `Transaction`: El objetivo de esta clase es poder crear instancias que simulen una transacción.
@@ -33,111 +34,30 @@
       * `create_mongo_db`: Crea una base de datos en MongoDB, llamada "users_db" y una colección llamada: "transactions", por defecto.
       * `get_db_collection`: Retorna la colección ya creada (la colección "transactions" en este caso).
 
-----
- 
-Crear un archivo `docker-compose.yml` por medio del cual se instancien **múltiples** contenedores que satisfagan la siguiente propuesta de problema.
-
-Necesitamos construir una API sencilla que nos permita registrar transacciones de usuario y tener un panorama general de como usan su dinero.
-``
-Para llevar esto a cabo, tienes que implementar una API que nos permita almacenar transacciones de usuario.
-
-Cada transacción tiene `referencia` (única), `fecha`, `total`, `tipo` y `categoría`, y luce de la siguiente manera:
-
-```json
-{
-    "reference": "000051",
-    "date": "2020-01-13",
-    "amount": "-51.13",
-    "type": "outflow",
-    "category": "groceries",
-    "user_email": "janedoe@email.com"
-}
-```
-
-Se tienen que tomar en cuenta los siguientes puntos:
-
+Con las clases anteriormente descritas e implementadas en código es posible tomar en cuenta los siguientes puntos:
 * La `referencia` de una transacción es única
 * Solamente existen dos tipos de transacción: `inflow` y `outflow`
 * Todas las transacciones de tipo `outflow` son numeros decimales negativos
 * Todas las transacciones de tipo `inflow` son numeros decimales positivos
 * Es posible recibir transacciones en masa también, ya sea por medio de un archivo externo o dentro de una misma petición
-* Las transacciones que recibamos pueden ya existir en nuestro sistema, por lo que es necesario validarlas para evitar duplicados en nuestra base de datos
 
-### Objetivos
+Con ayuda de un documento de tipo `docker-compose.yml` podemos crear imagenes e inicializar containers de: mongo_db, mongo-express y flask, con el contenedor de mongo_db podemos crear la base de datos de las de las transacciones de los usuarios y una ves habiendo generado las transacciones de manera aleatoria, podemos crear una colección que contenga todas las transacciones. 
 
-Dado el siguiente ejemplo de entrada de datos:
 
-```json
-[
-    {
-        "reference": "000051",
-        "date": "2020-01-03",
-        "amount": "-51.13",
-        "type": "outflow",
-        "category": "groceries",
-        "user_email": "janedoe@email.com"
-    },
-    {
-        "reference": "000052",
-        "date": "2020-01-10",
-        "amount": "2500.72",
-        "type": "inflow",
-        "category": "salary",
-        "user_email": "janedoe@email.com"
-    },
-    {
-        "reference": "000053",
-        "date": "2020-01-10",
-        "amount": "-150.72",
-        "type": "outflow",
-        "category": "transfer",
-        "user_email": "janedoe@email.com"
-    },
-    {
-        "reference": "000054",
-        "date": "2020-01-13",
-        "amount": "-560.00",
-        "type": "outflow",
-        "category": "rent",
-        "user_email": "janedoe@email.com"
-    },
-    {
-        "reference": "000051",
-        "date": "2020-01-04",
-        "amount": "-51.13",
-        "type": "outflow",
-        "category": "other",
-        "user_email": "johndoe@email.com"
-    },
-    {
-        "reference": "000689",
-        "date": "2020-01-10",
-        "amount": "150.72",
-        "type": "inflow",
-        "category": "savings",
-        "user_email": "janedoe@email.com"
-    }
-]
-```
 
-1.- Queremos ser capaces de ver un resumen que nos muestre el `inflow` y `outflow` total por usuario. Ejemplo:
+Utilizando mongo-express en el host:localhost, puerto:8081, es posible visualizar la base de datos posteriormente creada y llenada:
 
-```json
-GET /transactions?group_by=type
+![image](https://user-images.githubusercontent.com/71090472/173273141-96a8720b-2c56-4651-8a23-afcaccea1cde.png)
 
-[
-    {
-        "user_email": "janedoe@email.com",
-        "total_inflow": "2651.44",
-        "total_outflow": "-761.85"
-    },
-    {
-        "user_email": "johndoe@email.com",
-        "total_inflow": "0.00",
-        "total_outflow": "-51.13"
-    }
-]
-```
+![image](https://user-images.githubusercontent.com/71090472/173273163-198028a0-cce7-4cea-9258-5977e3435ec8.png)
+
+Otra manera de poder visualizar las transacciones pero esta ves de manera renderizada en HTML en formato JSON, es con el uso del container de Flask en el host:http://192.168.1.71/, puerto:5000, endpoint:transactions (contenedor creado en nuestro docker-compose)
+
+![image](https://user-images.githubusercontent.com/71090472/173273721-45946101-aae4-4d61-bff0-0aa931a5050e.png)
+
+1.- En el endpoint:transactions/grouped_by_type con el método:GET somos capaces de ver un resumen que nos muestra el `inflow` y `outflow` total por usuario. 
+* GET /transactions/grouped_by_type
+
 
 2.- Queremos poder ver un resumen de usuario por categoría que muestre la suma de cantidades por categoría de transacción. Ejemplo:
 
