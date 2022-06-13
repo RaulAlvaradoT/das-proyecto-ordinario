@@ -1,17 +1,40 @@
 # Proyecto Ordinario - Microservices Architecture
 
-### Desarrollo
-* Clases:
-    * `Transaction`: El objetivo de esta clase es poder crear instancias que simulen una transacción.
-      * `referencia`: Número de 6 dígitos que se incrementa de manera automática al crear una instancia de la clase Transaction.
-      * `date`: Fecha de cuando se realizó la transacción (se genera de manera automática utilizando la librería Faker).
-      * `amount`: Monto de la transacción (puede ser positivo o negativo).
-      * `type`: Representa el tipo de transacción (inflow o outflow), que se genera de acuerdo al monto (si el monto es mayor o igual a cero, el tipo de transacción es inflow, de lo contrario el tipo de la transacción es outflow).
-      * `category`: La categoría de la transacción (salary, savings, groceries, transfer, rent, other).
-      * `user`: El nombre de la persona de la transacción.
-      * `user_email`: El e-mail de la persona de la transacción.
-    *   el nombre al igual que el e-mail de la persona de una transacción se generan de manera automática (esto es generado utilizando la librería Faker), la referencia de la transferencia (un número de 6 dígitos que se le asigna a una transacción) es una atributo estático que se incrementa cada ves que se crea una instancia de la clase Transaction, esta clase contiene un constuctor que acepta dos parámetros el monto de la transferencia (si es un monto positivo o igual a cero, se crea una variable llamada `type` con el valor de `inflow`, si el monto es menor a cero se crea la variable `type` con un valor igual a `outflow`) y la categoría de la transferencia, por último la fecha de la transacción que también es un atributo de estáa clase, es generada utilizando la librería Faker.
+------ MODULO: user_transaction ------
+* `Transaction`: El objetivo de esta clase es poder crear instancias que simulen una transacción.
+   * ------ **ATRIBUTOS** ------
+   * `referencia`: Número de 6 dígitos que se incrementa de manera automática al crear una instancia de la clase Transaction.
+   * `date`: Fecha de cuando se realizó la transacción (se genera de manera automática utilizando la librería Faker).
+   * `amount`: Monto de la transacción (puede ser positivo o negativo).
+   * `type`: Representa el tipo de transacción (inflow o outflow), que se genera de acuerdo al monto (si el monto es mayor o igual a cero, el tipo de transacción es inflow, de lo contrario el tipo de la transacción es outflow).
+   * `category`: La categoría de la transacción (salary, savings, groceries, transfer, rent, other).
+   * `user`: El nombre de la persona de la transacción.
+   * `user_email`: El e-mail de la persona de la transacción.
+      * ------ **FUNCIONES** ------
+      * `set_user_data`: Se utiliza para asignar el nombre y el e-mail de la persona de la transacción, los cuales se obtienen por parámetros.
+      * `_get_object_to_dict`: Retorna el objeto creado en forma de diccionario.
+   
+* `TransactionGenerator`: El objetivo de esta clase es poder crear una lista de Transaciones generadas de manera aleatoria.
+   * ------ **FUNCIONES** ------
+   * `generate_rnd_transactions`: Esta función crea transacciones generadas de manera aleatoria, esto de acuerdo al número de usuarios ingresado por parámetros, e.g. por cada usuario se genera una transacción de categoría: salary, savings, groceries, transfer, rent y other, de modo que por cada usuario se generan 6 transacciones (si el número de usuarios es igual a 2, se generan 12 transacciones).
+   
+------ MODULO: mongo_db ------
+* `UserTransactionDB`: Esta clase se utiliza para crear una base de datos en Mongodb.
+   * ------ **ATRIBUTOS** ------
+   * `client`: Cliente necesario para crear una base de datos en MongoDB o para crear colecciones de documentos en MongoDB.
+   * `users_db`: Atributo que contiene la base de datos de MongoDB
+   * `transactions`: Atributo que contiene una colección de la base de datos de MongoDB
+      * ------ **FUNCIONES** ------
+      * `_generate_mongo_client`: Genera una instancia de tipo MongoClient.
+         *  Host: mongo_db
+         *  port: 27017
+         *  username: root
+         *  password: kberl
+      * `create_mongo_db`: Crea una base de datos en MongoDB, llamada "users_db" y una colección llamada: "transactions", por defecto.
+      * `get_db_collection`: Retorna la colección ya creada (la colección "transactions" en este caso).
 
+----
+ 
 Crear un archivo `docker-compose.yml` por medio del cual se instancien **múltiples** contenedores que satisfagan la siguiente propuesta de problema.
 
 Necesitamos construir una API sencilla que nos permita registrar transacciones de usuario y tener un panorama general de como usan su dinero.
@@ -164,35 +187,3 @@ Finalmente, agreguen un video en equipo, en donde se exponga a detalle su proyec
 
 * Llevar a cabo este punto por medio de `MS Teams` y subir el archivo `.mp4` a algún drive público adjuntando el link de acceso al video al archivo `README`.md
 * La exposición no debe tener una duración mayor a **15** minutos
-
-## Recursos
-
-### Arquitectura
-
-* <https://www.oreilly.com/library/view/software-architecture-patterns/9781491971437/ch04.html>
-* <https://www.microservices.com/>
-* <https://microservices.io/patterns/microservices.html>
-* <https://medium.com/hashmapinc/the-what-why-and-how-of-a-microservices-architecture-4179579423a9>
-* <https://github.com/GoogleCloudPlatform/microservices-demo>
-* <https://microservices-scaffold.readthedocs.io/en/latest/>
-* <https://medium.com/@sonusharma.mnnit/building-a-microservice-in-python-ff009da83dac>
-* <https://www.paradigmadigital.com/dev/como-construir-microservicios-en-python-1-2/>
-* <https://codigofacilito.com/articulos/microservcios>
-* <https://steemit.com/spanish/@jza/nameko-framework-de-microservicios-con-python>
-* <https://ichi.pro/es/microservicios-de-python-api-objetos-y-modelos-de-datos-de-almacenamiento-170228015369526>
-
-### Librerías
-
-* <https://www.rabbitmq.com/getstarted.html>
-* <https://github.com/Pungyeon/go-rabbitmq-example/blob/master/README.md>
-* <https://kafka.apache.org/>
-* <https://redislabs.com/blog/use-redis-event-store-communication-microservices/>
-* <https://docs.celeryproject.org/en/stable/getting-started/introduction.html>
-* <https://autobahn.readthedocs.io/en/latest/asynchronous-programming.html>
-* <https://xpdays.com.ua/programs/event-driven-systems-with-mongodb/>
-* <https://github.com/python-microservices>
-* <https://nameko.readthedocs.io/en/stable/>
-
-## Deadline
-
-* `Domingo 12 de Junio a las 11:59pm`
