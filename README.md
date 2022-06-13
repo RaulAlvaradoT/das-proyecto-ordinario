@@ -2,7 +2,15 @@
 
 ### Desarrollo
 * Clases:
-    * `Transaction`: El objetivo de esta clase es poder crear instancias que simulen una transacción, al crear una instancia de esta clase, el nombre al igual que el e-mail de la persona de una transacción se generan de manera automática (esto es generado utilizando la librería Faker), la referencia de la transferencia (un número de 6 dígitos que se le asigna a una transacción) es una atributo estático que se incrementa cada ves que se crea una instancia de la clase Transaction, esta clase contiene un constuctor que acepta dos parámetros el monto de la transferencia (si es un monto positivo o igual a cero, se crea una variable llamada `type` con el valor de `inflow`, si el monto es menor a cero se crea la variable `type` con un valor igual a `outflow`) y la categoría de la transferencia.
+    * `Transaction`: El objetivo de esta clase es poder crear instancias que simulen una transacción.
+      * `referencia`: Número de 6 dígitos que se incrementa de manera automática al crear una instancia de la clase Transaction.
+      * `date`: Fecha de cuando se realizó la transacción (se genera de manera automática utilizando la librería Faker).
+      * `amount`: Monto de la transacción (puede ser positivo o negativo).
+      * `type`: Representa el tipo de transacción (inflow o outflow), que se genera de acuerdo al monto (si el monto es mayor o igual a cero, el tipo de transacción es inflow, de lo contrario el tipo de la transacción es outflow).
+      * `category`: La categoría de la transacción (salary, savings, groceries, transfer, rent, other).
+      * `user`: El nombre de la persona de la transacción.
+      * `user_email`: El e-mail de la persona de la transacción.
+    *   el nombre al igual que el e-mail de la persona de una transacción se generan de manera automática (esto es generado utilizando la librería Faker), la referencia de la transferencia (un número de 6 dígitos que se le asigna a una transacción) es una atributo estático que se incrementa cada ves que se crea una instancia de la clase Transaction, esta clase contiene un constuctor que acepta dos parámetros el monto de la transferencia (si es un monto positivo o igual a cero, se crea una variable llamada `type` con el valor de `inflow`, si el monto es menor a cero se crea la variable `type` con un valor igual a `outflow`) y la categoría de la transferencia, por último la fecha de la transacción que también es un atributo de estáa clase, es generada utilizando la librería Faker.
 
 Crear un archivo `docker-compose.yml` por medio del cual se instancien **múltiples** contenedores que satisfagan la siguiente propuesta de problema.
 
