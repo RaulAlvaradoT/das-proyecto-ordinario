@@ -1,6 +1,8 @@
 # Proyecto Ordinario - Microservices Architecture
 
 ### Desarrollo
+* Clases:
+    * `Transaction`: El objetivo de esta clase es poder crear instancias que simulen una transacción, al crear una instancia de esta clase, el nombre al igual que el e-mail de la persona de una transacción se generan de manera automática (esto es generado utilizando la librería Faker), la referencia de la transferencia (un número de 6 dígitos que se le asigna a una transacción) es una atributo estático que se incrementa cada ves que se crea una instancia de la clase Transaction, esta clase contiene un constuctor que acepta dos parámetros el monto de la transferencia (si es un monto positivo o igual a cero, se crea una variable llamada `type` con el valor de `inflow`, si el monto es menor a cero se crea la variable `type` con un valor igual a `outflow`) y la categoría de la transferencia.
 
 Crear un archivo `docker-compose.yml` por medio del cual se instancien **múltiples** contenedores que satisfagan la siguiente propuesta de problema.
 
